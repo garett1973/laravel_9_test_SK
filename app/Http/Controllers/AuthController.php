@@ -55,7 +55,7 @@ class AuthController extends Controller
             'terms' => $request->terms,
         ]);
 
-        event(new Registered($user));
+//        event(new Registered($user));
 
         return $this->success([
             'user' => $user,
@@ -64,6 +64,8 @@ class AuthController extends Controller
 
     public function logout(): JsonResponse
     {
-        return $this->success(null, 'This is the logout method');
+        Auth::user()->currentAccessToken()->delete();
+
+        return $this->success('','Logged out successfully', 200);
     }
 }
